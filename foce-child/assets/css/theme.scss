@@ -1,0 +1,394 @@
+// Variables
+$fade-duration: 2s;
+$rotate-duration: 10s;
+$float-duration: 3s;
+$big-font-size: 64px;
+$small-font-size: 40px;
+$main-color: black;
+$hover-shadow-color: #FF5C00;
+$background-color: #FFF5E9;
+
+// Mixins
+@mixin fade-in {
+  animation: fade-in $fade-duration ease-in-out forwards;
+}
+
+@mixin rotate {
+  animation: rotate $rotate-duration linear infinite;
+}
+
+@mixin float {
+  animation: float $float-duration ease infinite;
+}
+
+// Keyframes
+@keyframes fade {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 50%, 100% { transform: translateY(0px); }
+  25% { transform: translateY(-10px) translateX(15px); }
+  75% { transform: translateY(-15px) translateX(-10px); }
+}
+
+// Base styles
+#page {
+  overflow: hidden;
+}
+
+.fade-in {
+  @include fade-in;
+}
+
+#parallax-video {
+  position: absolute !important;
+  z-index: 1 !important;
+}
+
+#parallax-logo {
+  position: relative !important;
+  @include float;
+  z-index: 2 !important;
+}
+
+// Media queries
+@media screen and (max-width: 767px) {
+  #parallax-video {
+    display: none; 
+  }
+  .banner {
+    min-height: 400px;
+  }
+}
+
+// Header Menu
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+}
+
+.main-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  height: 80px;
+
+  .menu-toggle {
+    display: block;
+    cursor: pointer;
+    width: calc(40px + 80px);
+    text-align: right;
+
+    .line {
+      display: block;
+      width: 40px;
+      height: 1px;
+      margin: 9px 0;
+    }
+  }
+
+  &.cross-menu {
+    .line {
+      width: 40px;
+      position: absolute;
+      top: 26px;
+
+      &:nth-child(1) { transform: translateY(-50%) rotate(45deg); }
+      &:nth-child(2) { opacity: 0; }
+      &:nth-child(3) { transform: translateY(50%) rotate(-45deg); }
+    }
+  }
+}
+
+.fullscreen-nav {
+  display: none;
+  position: fixed;
+  top: 80px;
+  margin: auto;
+  max-width: 1440px;
+  height: 100%;
+  width: 100%;
+  background-color: $background-color;
+  z-index: 1;
+  @include fade-in;
+  overflow: hidden;
+  justify-content: center;
+
+  ul {
+    list-style: none;
+    text-align: center;
+  }
+
+  li {
+    top: 30px;
+    margin: 15px 0;
+    font-size: $big-font-size;
+    line-height: 84px;
+  }
+
+  a:hover {
+    color: $main-color;
+    text-shadow: 0px 0px 14px $hover-shadow-color;
+  }
+}
+
+.logo-nav {
+  width: 154px;
+  height: 95px;
+  display: inline-block;
+}
+
+.footernav {
+  position: fixed !important;
+  bottom: 0px !important;
+  font-size: 1rem;
+}
+
+// Pseudo-elements for navigation
+.story-nav, .characters-nav, .place-nav, .studio-nav {
+  &::before, &::after {
+    content: "";
+    background-size: contain;
+    display: block;
+    position: absolute;
+    @include rotate;
+  }
+
+  &::after {
+    @include float;
+  }
+}
+
+// Media queries for navigation elements
+@media (max-width: 500px) {
+  .site-title a {
+    font-size: 16px;
+  }
+
+  .menu-toggle {
+    width: calc(40px + 20px);
+  }
+
+  .fullscreen-nav li {
+    font-size: $small-font-size;
+    line-height: 60px;
+  }
+}
+
+// Styles spécifiques pour les sections et animations
+.story-nav::before {
+  background: url("../../assets/images/orchid.png");
+  width: 172px;
+  height: 168px;
+  top: -100px;
+  left: -500px;
+}
+
+.story-nav::after {
+  background: url("../../assets/images/Sunflower.png");
+  width: 216px;
+  height: 216px;
+  top: -100px;
+  margin-left: 95%;
+}
+
+.characters-nav::before {
+  background: url("../../assets/images/bluecat.png");
+  width: 110px;
+  height: 100px;
+  left: -190px;
+  top: -90px;
+}
+
+.characters-nav::after {
+  background: url("../../assets/images/random_flower.png");
+  width: 75px;
+  height: 75px;
+  margin-left: 175%;
+  top: -5px;
+}
+
+.place-nav::before {
+  background: url("../../assets/images/flower.png");
+  width: 71px;
+  height: 71px;
+  left: -90px;
+  top: -10px;
+}
+
+.place-nav::after {
+  background: url("../../assets/images/blackcat.png");
+  width: 154px;
+  height: 148px;
+  margin-left: 95%;
+  top: 10px;
+}
+
+.studio-nav::before {
+  background: url("../../assets/images/orangecat.png");
+  width: 106px;
+  height: 96px;
+  left: -350px;
+  top: 60px;
+}
+
+.studio-nav::after {
+  background: url("../../assets/images/Hibiscus.png");
+  width: 600px;
+  height: 600px;
+  left: 700px;
+  top: -50px;
+}
+
+// Styles pour la section "Personnages"
+.story #characters {
+  margin-bottom: 0px;
+
+  h3 {
+    margin-right: 750px;
+    white-space: nowrap;
+
+    @media only screen and (max-width: 1200px) {
+      margin-right: 450px;  
+    }
+
+    @media only screen and (max-width: 767px) {
+      margin-right: 5%;
+    }
+  }
+}
+
+figcaption, figure {
+  text-align: center;
+}
+
+body .swiper-3d {
+  width: 40% !important;
+  padding-bottom: 30px;
+}
+
+// Styles pour la section "Place/Lieu"
+.story #place {
+  background-image: url("../../assets/images/place_bgnew.png");
+  margin-top: 20px;
+
+  .big-cloud, .little-cloud {
+    filter: blur(10px);
+    position: absolute; 
+    z-index: 2;
+    right: 0; 
+
+    &.big-cloud {
+      height: 122px;
+      margin-right: 100px;
+      margin-top: 70px; 
+      transform: translateX(var(--posX));
+    }
+
+    &.little-cloud {
+      height: 55px;
+      margin-right: 505px;
+      margin-top: 265px; 
+      transform: translateX(var(--posX));
+    }
+  }
+}
+
+@media (max-width: 720px) {
+  .big-cloud, .little-cloud {
+    display: none;
+  }
+}
+
+// Styles pour la section "Nominations"
+#nomination {
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 1100px;
+  margin-top: 10em;
+
+  .title-nominations {
+    background-image: url(../../assets/images/nomination-bg.png);
+    margin: 0;
+    background-size: 100%; 
+    text-align: left;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .nominations-img {
+    width: 250px;
+    display: block; // Pour éliminer l'espace blanc autour
+  }
+}
+
+// Adaptations responsives pour la section "Nominations"
+@media screen and (min-width: 800px) and (max-width: 1000px) {
+  #nomination {
+    width: 80%;
+
+    .title-nominations {
+      font-size: 2rem;  
+    }
+  }
+}
+
+@media screen and (min-width: 680px) and (max-width: 880px) {
+  #nomination {
+    width: 50%;
+    flex-direction: column;
+
+    .title-nominations {
+      font-size: 1.5rem; 
+    }
+  }
+}
+
+@media screen and (max-width: 680px) {
+  #nomination {
+    flex-direction: column;
+    width: 70%;
+
+    .title-nominations {
+      text-align: center; 
+      font-size: 1.5rem;
+    }
+  }
+}
+
+// Styles supplémentaires pour les titres et animations
+@keyframes fade-in  {
+  from {
+    opacity: 0;
+    transform: translateY(10rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 
+
+.fade-in-class {
+  position: relative !important;
+  animation: fade-in 2s ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  display: block;
+
+  &::before, &::after {
+    content: "";
+    position: absolute;
+    animation: fade-in 2s ease-in-out;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+  }
+}
